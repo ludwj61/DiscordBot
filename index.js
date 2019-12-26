@@ -13,6 +13,8 @@ const ytdl = require("ytdl-core");
 // must manually be set to number of pasta types available (e.g. furry + weeb = 2)
 const NUMBER_OF_PASTAS = 2;
 
+const MIN_INTERVAL = 10000 * 60;
+
 client.login(TOKEN);
 
 client.on("ready", () => {
@@ -72,6 +74,21 @@ client.on("message", message => {
             case "pleasenomore":
                 voiceChannel = message.member.voiceChannel.leave();
                 message.reply("meanie... >w<")
+                break;
+            case "hewwo":
+                message.channel.send("I HAVE AWWIVED~ how awe you cuties~ ^w^");
+                break;
+            case "loop":
+                setInterval(function () {
+                    message.channel.send("nyaaaaaaaaaa~");
+                }, MIN_INTERVAL)
+                break;
+            case "info":
+                const embed = new Discord.RichEmbed()
+                .addField("What is this horrible creation?", 
+                "The DegenerateBot will keep your server at peak degeneracy at all times.")
+                .addField("Some commands", "!furry\n!weeb\n!degen\n!hewwo");
+                message.channel.send(embed);
                 break;
             default:
                 message.reply("ohh nyoo I did a fuccy wukky hehe~ ;;w;;\n wat command is dat (´・ω・\`)");
