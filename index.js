@@ -14,8 +14,8 @@ const NUMBER_OF_PASTAS = 2;
 client.login(TOKEN);
 
 client.on("ready", () => {
-    console.log("This bot is online");
-})
+    console.log("DegenerateBot online");
+});
 
 function getPasta(type) {
     var jsonString = file_system.readFileSync("copypastas.json", "utf8");
@@ -60,14 +60,38 @@ client.on("message", message => {
                 message.reply("ohh nyoo I did a fuccy wukky hehe~ ;;w;;\n wat command is dat (´・ω・\`)");
                 break;
         }
-    } else if (message.content.includes("loli")) {
+    } else if (message.member.user.tag != "DegenerateBot#4865" &&
+        message.content.substring(0, 1) === "+") {
+
+        let command = message.content.substring(PREFIX.length).split(" ");
+        switch (command[0].toLowerCase()) {
+            case "play":
+                var chanceToPlay = Math.random();
+                if (chanceToPlay >= 0 && chanceToPlay <= .1) {
+                    setTimeout(function () {
+                        console.log("someone said +play...");
+                        var voiceChannel = message.member.voiceChannel;
+                        voiceChannel.join();
+                        setTimeout(function () {
+                            // play music
+                        }, 3000);
+                    }, 5000);
+                }
+                break;
+            default:
+                break;
+        }
+    } else if (message.member.user.tag != "DegenerateBot#4865" &&
+        message.content.toLowerCase().includes("loli")) {
         message.reply("Ahh a fewwow cutie I see UwU~~");
-    } else if (message.content === "stop") {
+    } else if (message.member.user.tag != "DegenerateBot#4865" &&
+        message.content.toLowerCase() === "stop") {
         message.reply("hee-hee~~ we will nevwa stawp being weebuwus!!!~");
     } else {
         var chance_for_random_message = Math.random();
 
         if (message.member.user.tag != "DegenerateBot#4865"
+            && message.member.user.tag != "Vexera#8487"
             && chance_for_random_message >= 0
             && chance_for_random_message <= .25) {
 
@@ -80,6 +104,7 @@ client.on("message", message => {
             owo_msg += " " + random_smiley;
             message.reply(owo_msg);
         } else if (message.member.user.tag != "DegenerateBot#4865"
+            && message.member.user.tag != "Vexera#8487"
             && chance_for_random_message > .25
             && chance_for_random_message <= .35) {
 
@@ -106,4 +131,4 @@ client.on("message", message => {
             }
         }
     }
-})
+});
