@@ -10,10 +10,11 @@ const image_dir = './images/';
 
 const ytdl = require("ytdl-core");
 
-// must manually be set to number of pasta types available (e.g. furry + weeb = 2)
+// must manually be set to number of pasta types available that you want in general pool 
+// (not hewwo only pool)
 const NUMBER_OF_PASTAS = 2;
 
-const MIN_INTERVAL = 10000 * 60;
+const MIN_INTERVAL = 100000 * 60;
 
 client.login(TOKEN);
 
@@ -31,6 +32,9 @@ function getPasta(type) {
         case "weeb":
             var random_array_value = Math.floor(Math.random() * obj.weeb_pastas.length);
             return obj.weeb_pastas[random_array_value].pasta;
+        case "hewwo":
+            var random_array_value = Math.floor(Math.random() * obj.hewwo_pastas.length);
+            return obj.hewwo_pastas[random_array_value].pasta;
         default:
             break;
     }
@@ -76,7 +80,8 @@ client.on("message", message => {
                 message.reply("meanie... >w<")
                 break;
             case "hewwo":
-                message.channel.send("I HAVE AWWIVED~ how awe you cuties~ ^w^");
+                var pasta = getPasta("hewwo");
+                message.channel.send(pasta);
                 break;
             case "loop":
                 setInterval(function () {
@@ -129,7 +134,7 @@ client.on("message", message => {
         if (message.member.user.tag != "DegenerateBot#4865"
             && message.member.user.tag != "Vexera#8487"
             && chance_for_random_message >= 0
-            && chance_for_random_message <= .25) {
+            && chance_for_random_message <= .3) {
 
             var smileys = [";;w;;", "^w^", ">w<", "UwU", "(・`ω\´・)", "(´・ω・\`)"];
             var random_smiley = smileys[Math.floor(Math.random() * smileys.length)];
@@ -141,8 +146,8 @@ client.on("message", message => {
             message.reply(owo_msg);
         } else if (message.member.user.tag != "DegenerateBot#4865"
             && message.member.user.tag != "Vexera#8487"
-            && chance_for_random_message > .25
-            && chance_for_random_message <= .35) {
+            && chance_for_random_message > .3
+            && chance_for_random_message <= .4) {
 
             message.reply("WOW~ YOU GOT A RARE DROP UWU!");
             var randomPastaType = Math.floor(Math.random() * (NUMBER_OF_PASTAS + 1));
