@@ -76,8 +76,8 @@ client.on("message", message => {
             && chance_for_random_message > .25
             && chance_for_random_message <= .35) {
 
-            message.reply("WOW~ YOU GOT A RARE PWASTA DROP UWU!");
-            var randomPastaType = Math.floor(Math.random() * NUMBER_OF_PASTAS);
+            message.reply("WOW~ YOU GOT A RARE DROP UWU!");
+            var randomPastaType = Math.floor(Math.random() * (NUMBER_OF_PASTAS + 1));
             switch (randomPastaType) {
                 case 0:
                     var pasta = getPasta("furry")
@@ -86,6 +86,13 @@ client.on("message", message => {
                 case 1:
                     var pasta = getPasta("weeb")
                     message.channel.send(pasta);
+                    break;
+                case 2:
+                    file_system.readdir(image_dir, (err, files) => {
+                        var numberOfImages = files.length;
+                        var randomImage = Math.floor(Math.random() * numberOfImages) + 1;
+                        message.channel.send({ files: [image_dir + randomImage + ".jpg"] });
+                    });
                     break;
                 default:
                     break;
