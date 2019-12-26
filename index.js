@@ -24,34 +24,41 @@ client.on("message", message => {
         switch (command[0]) {
             case "degen":
                 file_system.readdir(image_dir, (err, files) => {
-                    numberOfImages = files.length;
+                    var numberOfImages = files.length;
                     message.reply("OwO IF YOU SAY SO~~~");
-                    randomImage = Math.floor(Math.random() * numberOfImages) + 1;
-                    message.channel.send({ files: [image_dir + randomImage + ".png"] });
+                    var randomImage = Math.floor(Math.random() * numberOfImages) + 1;
+                    message.channel.send({ files: [image_dir + randomImage + ".jpg"] });
                 });
                 break;
             case "furry":
-                let jsonString = file_system.readFileSync("copypastas.json", "utf8");
-                let obj = JSON.parse(jsonString);
+                var jsonString = file_system.readFileSync("copypastas.json", "utf8");
+                var obj = JSON.parse(jsonString);
 
-                random_array_value = Math.floor(Math.random() * obj.furry_pastas.length);
+                var random_array_value = Math.floor(Math.random() * obj.furry_pastas.length);
                 message.channel.send(obj.furry_pastas[random_array_value].pasta);
+                break;
+            case "weeb":
+                var jsonString = file_system.readFileSync("copypastas.json", "utf8");
+                var obj = JSON.parse(jsonString);
+                
+                var random_array_value = Math.floor(Math.random() * obj.weeb_pastas.length);
+                message.channel.send(obj.weeb_pastas[random_array_value].pasta);
                 break;
             default:
                 break;
         }
     } else {
-        chance_for_random_message = Math.random();
+        var chance_for_random_message = Math.random();
 
         if (message.member.user.tag != "DegenerateBot#4865"
             && chance_for_random_message >= 0 
             && chance_for_random_message <= .25) {
 
-            smileys = [";;w;;", "^w^", ">w<", "UwU", "(・`ω\´・)", "(´・ω・\`)"];
-            random_smiley = smileys[Math.floor(Math.random() * smileys.length)];
+            var smileys = [";;w;;", "^w^", ">w<", "UwU", "(・`ω\´・)", "(´・ω・\`)"];
+            var random_smiley = smileys[Math.floor(Math.random() * smileys.length)];
 
-            let regex = /[lr]/g;
-            let owo_msg = message.content.replace(regex, "w");
+            var regex = /[lr]/g;
+            var owo_msg = message.content.replace(regex, "w");
 
             owo_msg += " " + random_smiley;
             message.reply(owo_msg);
