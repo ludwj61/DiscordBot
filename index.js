@@ -8,6 +8,7 @@ const PREFIX = "!";
 const file_system = require('fs');
 const image_dir = './images/';
 
+// must manually be set to number of pasta types available (furry + weeb = 2)
 const NUMBER_OF_PASTAS = 2;
 
 client.login(TOKEN);
@@ -32,12 +33,10 @@ function getPasta(type) {
 }
 
 client.on("message", message => {
-    if (message.content.includes("loli")) {
-        message.reply("Ahh a fewwow cutie I see UwU~~");
-    } else if (message.content.substring(0, 1) === "!") {
-        let command = message.content.substring(PREFIX.length).split(" ");
+    if (message.content.substring(0, 1) === "!") {
 
-        switch (command[0]) {
+        let command = message.content.substring(PREFIX.length).split(" ");
+        switch (command[0].toLowerCase()) {
             case "degen":
                 file_system.readdir(image_dir, (err, files) => {
                     var numberOfImages = files.length;
@@ -54,9 +53,17 @@ client.on("message", message => {
                 var pasta = getPasta("weeb");
                 message.channel.send(pasta);
                 break;
+            case "stop":
+                message.reply("UMU nice try~~ >w<");
+                break;
             default:
+                message.reply("ohh nyoo I did a fuccy wukky hehe~ ;;w;;\n wat command is dat (´・ω・\`)");
                 break;
         }
+    } else if (message.content.includes("loli")) {
+        message.reply("Ahh a fewwow cutie I see UwU~~");
+    } else if (message.content === "stop") {
+        message.reply("hee-hee~~ we will nevwa stawp being weebuwus!!!~");
     } else {
         var chance_for_random_message = Math.random();
 
@@ -80,11 +87,11 @@ client.on("message", message => {
             var randomPastaType = Math.floor(Math.random() * (NUMBER_OF_PASTAS + 1));
             switch (randomPastaType) {
                 case 0:
-                    var pasta = getPasta("furry")
+                    var pasta = getPasta("furry");
                     message.channel.send(pasta);
                     break;
                 case 1:
-                    var pasta = getPasta("weeb")
+                    var pasta = getPasta("weeb");
                     message.channel.send(pasta);
                     break;
                 case 2:
