@@ -10,7 +10,7 @@ const image_dir = './images/';
 
 const ytdl = require("ytdl-core");
 
-// must manually be set to number of pasta types available (furry + weeb = 2)
+// must manually be set to number of pasta types available (e.g. furry + weeb = 2)
 const NUMBER_OF_PASTAS = 2;
 
 client.login(TOKEN);
@@ -69,6 +69,10 @@ client.on("message", message => {
             case "stop":
                 message.reply("UMU nice try~~ >w<");
                 break;
+            case "pleasenomore":
+                voiceChannel = message.member.voiceChannel.leave();
+                message.reply("meanie... >w<")
+                break;
             default:
                 message.reply("ohh nyoo I did a fuccy wukky hehe~ ;;w;;\n wat command is dat (´・ω・\`)");
                 break;
@@ -80,12 +84,17 @@ client.on("message", message => {
         switch (command[0].toLowerCase()) {
             case "play":
                 var chanceToPlay = Math.random();
-                if (chanceToPlay >= 0 && chanceToPlay <= .25) {
+                if (chanceToPlay >= 0 && chanceToPlay <= 25) {
                     setTimeout(function () {
                         var voiceChannel = message.member.voiceChannel;
                         var link = "https://www.youtube.com/watch?v=SGF_iTLdw4U";
                         playYoutubeVideo(link, voiceChannel);
                     }, 3000);
+                }
+                break;
+            case "skip":
+                if (message.guild.voiceConnection) {
+                    message.channel.send("hehe~");
                 }
                 break;
             default:
