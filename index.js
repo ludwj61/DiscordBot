@@ -8,6 +8,8 @@ const PREFIX = "!";
 const file_system = require('fs');
 const image_dir = './images/';
 
+const ytdl = require("ytdl-core");
+
 // must manually be set to number of pasta types available (furry + weeb = 2)
 const NUMBER_OF_PASTAS = 2;
 
@@ -30,6 +32,17 @@ function getPasta(type) {
         default:
             break;
     }
+}
+
+function playYoutubeVideo(link, voiceChannel) {
+    const streamOptions = { seek: 0, volume: 1 };
+    voiceChannel.join().then(connection => {
+        const stream = ytdl(link, { filter: "audioonly" });
+        const dispatcher = connection.playStream(stream, streamOptions);
+        dispatcher.on("end", end => {
+            voiceChannel.leave();
+        });
+    }).catch(err => console.log(err));
 }
 
 client.on("message", message => {
@@ -67,15 +80,12 @@ client.on("message", message => {
         switch (command[0].toLowerCase()) {
             case "play":
                 var chanceToPlay = Math.random();
-                if (chanceToPlay >= 0 && chanceToPlay <= .1) {
+                if (chanceToPlay >= 0 && chanceToPlay <= .25) {
                     setTimeout(function () {
-                        console.log("someone said +play...");
                         var voiceChannel = message.member.voiceChannel;
-                        voiceChannel.join();
-                        setTimeout(function () {
-                            // play music
-                        }, 3000);
-                    }, 5000);
+                        var link = "https://www.youtube.com/watch?v=SGF_iTLdw4U";
+                        playYoutubeVideo(link, voiceChannel);
+                    }, 3000);
                 }
                 break;
             default:
