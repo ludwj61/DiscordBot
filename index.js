@@ -75,6 +75,7 @@ client.on("message", message => {
         } else if (message.member.user.tag != "DegenerateBot#4865"
             && chance_for_random_message > .25
             && chance_for_random_message <= .35) {
+
             message.reply("WOW~ YOU GOT A RARE PWASTA DROP UWU!");
             var randomPastaType = Math.floor(Math.random() * NUMBER_OF_PASTAS);
             switch (randomPastaType) {
