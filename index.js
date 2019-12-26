@@ -106,7 +106,7 @@ client.on("message", message => {
         switch (command[0].toLowerCase()) {
             case "play":
                 var chanceToPlay = Math.random();
-                if (chanceToPlay >= 0 && chanceToPlay <= 25) {
+                if (chanceToPlay >= 0 && chanceToPlay <= .25) {
                     setTimeout(function () {
                         var voiceChannel = message.member.voiceChannel;
                         var link = "https://www.youtube.com/watch?v=SGF_iTLdw4U";
@@ -134,7 +134,7 @@ client.on("message", message => {
         if (message.member.user.tag != "DegenerateBot#4865"
             && message.member.user.tag != "Vexera#8487"
             && chance_for_random_message >= 0
-            && chance_for_random_message <= .3) {
+            && chance_for_random_message <= .25) {
 
             var smileys = [";;w;;", "^w^", ">w<", "UwU", "(・`ω\´・)", "(´・ω・\`)"];
             var random_smiley = smileys[Math.floor(Math.random() * smileys.length)];
@@ -146,8 +146,8 @@ client.on("message", message => {
             message.reply(owo_msg);
         } else if (message.member.user.tag != "DegenerateBot#4865"
             && message.member.user.tag != "Vexera#8487"
-            && chance_for_random_message > .3
-            && chance_for_random_message <= .4) {
+            && chance_for_random_message > .25
+            && chance_for_random_message <= .33) {
 
             message.reply("WOW~ YOU GOT A RARE DROP UWU!");
             var randomPastaType = Math.floor(Math.random() * (NUMBER_OF_PASTAS + 1));
