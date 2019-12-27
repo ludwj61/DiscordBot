@@ -11,7 +11,7 @@ const ytdl = require("ytdl-core");
 const TOKEN = JSON.parse(file_system.readFileSync("config.json", "utf8"));
 
 // must manually be set to number of pasta types available that you want in general pool 
-// (not hewwo only pool)
+// (not !hewwo command pool)
 const NUMBER_OF_PASTAS = 2;
 
 const MIN_INTERVAL = 100000 * 60;
@@ -51,18 +51,39 @@ function playYoutubeVideo(link, voiceChannel) {
     }).catch(err => console.log(err));
 }
 
+function showRandomImage(message) {
+    file_system.readdir(image_dir, (err, files) => {
+        var numberOfImages = files.length;
+        var randomImage = Math.floor(Math.random() * numberOfImages) + 1;
+        message.channel.send({ files: [image_dir + randomImage + ".jpg"] });
+    });
+}
+
+function uwuify(message) {
+    var smileys = [";;w;;", "^w^", ">w<", "UwU", "(・`ω\´・)", "(´・ω・\`)"];
+    var random_smiley = smileys[Math.floor(Math.random() * smileys.length)];
+
+    var regex = /[lr]/g;
+    var owo_msg = message.content.replace(regex, "w");
+    owo_msg += " " + random_smiley;
+
+    message.channel.send("hehe~\n");
+    
+    if (owo_msg.includes("!uwuify")) {
+        owo_msg = owo_msg.split("!uwuify").join();
+        message.channel.send(owo_msg.substring(1));
+    } else {
+        message.reply(owo_msg);
+    }
+}
+
 client.on("message", message => {
     if (message.content.substring(0, 1) === "!") {
 
         let command = message.content.substring(PREFIX.length).split(" ");
         switch (command[0].toLowerCase()) {
             case "degen":
-                file_system.readdir(image_dir, (err, files) => {
-                    var numberOfImages = files.length;
-                    message.reply("OwO IF YOU SAY SO~~~");
-                    var randomImage = Math.floor(Math.random() * numberOfImages) + 1;
-                    message.channel.send({ files: [image_dir + randomImage + ".jpg"] });
-                });
+                showRandomImage(message);
                 break;
             case "furry":
                 var pasta = getPasta("furry");
@@ -92,8 +113,11 @@ client.on("message", message => {
                 const embed = new Discord.RichEmbed()
                     .addField("What is this horrible creation?",
                         "The DegenerateBot will keep your server at peak degeneracy at all times.")
-                    .addField("Some commands", "!furry\n!weeb\n!degen\n!hewwo");
+                    .addField("Some commands", "!furry\n!weeb\n!degen\n!hewwo\n!uwuify");
                 message.channel.send(embed);
+                break;
+            case "uwuify":
+                uwuify(message);
                 break;
             default:
                 message.reply("ohh nyoo I did a fuccy wukky hehe~ ;;w;;\n wat command is dat (´・ω・\`)");
@@ -129,46 +153,35 @@ client.on("message", message => {
         message.content.toLowerCase() === "stop") {
         message.reply("hee-hee~~ we will nevwa stawp being weebuwus!!!~");
     } else if (!message.content.includes("https://") && !message.content.includes("http://")) {
-            var chance_for_random_message = Math.random();
-            if (message.member.user.tag != "DegenerateBot#4865"
-                && message.member.user.tag != "Vexera#8487"
-                && chance_for_random_message >= 0
-                && chance_for_random_message <= .20) {
+        var chance_for_random_message = Math.random();
+        if (message.member.user.tag != "DegenerateBot#4865"
+            && message.member.user.tag != "Vexera#8487"
+            && chance_for_random_message >= 0
+            && chance_for_random_message <= .20) {
 
-                var smileys = [";;w;;", "^w^", ">w<", "UwU", "(・`ω\´・)", "(´・ω・\`)"];
-                var random_smiley = smileys[Math.floor(Math.random() * smileys.length)];
+            uwuify(message);
+        } else if (message.member.user.tag != "DegenerateBot#4865"
+            && message.member.user.tag != "Vexera#8487"
+            && chance_for_random_message > .25
+            && chance_for_random_message <= .30) {
 
-                var regex = /[lr]/g;
-                var owo_msg = message.content.replace(regex, "w");
-
-                owo_msg += " " + random_smiley;
-                message.reply(owo_msg);
-            } else if (message.member.user.tag != "DegenerateBot#4865"
-                && message.member.user.tag != "Vexera#8487"
-                && chance_for_random_message > .25
-                && chance_for_random_message <= .30) {
-
-                message.reply("WOW~ YOU GOT A RARE DROP UWU!");
-                var randomPastaType = Math.floor(Math.random() * (NUMBER_OF_PASTAS + 1));
-                switch (randomPastaType) {
-                    case 0:
-                        var pasta = getPasta("furry");
-                        message.channel.send(pasta);
-                        break;
-                    case 1:
-                        var pasta = getPasta("weeb");
-                        message.channel.send(pasta);
-                        break;
-                    case 2:
-                        file_system.readdir(image_dir, (err, files) => {
-                            var numberOfImages = files.length;
-                            var randomImage = Math.floor(Math.random() * numberOfImages) + 1;
-                            message.channel.send({ files: [image_dir + randomImage + ".jpg"] });
-                        });
-                        break;
-                    default:
-                        break;
-                }
+            message.reply("WOW~ YOU GOT A RARE DROP UWU!");
+            var randomPastaType = Math.floor(Math.random() * (NUMBER_OF_PASTAS + 1));
+            switch (randomPastaType) {
+                case 0:
+                    var pasta = getPasta("furry");
+                    message.channel.send(pasta);
+                    break;
+                case 1:
+                    var pasta = getPasta("weeb");
+                    message.channel.send(pasta);
+                    break;
+                case 2:
+                    showRandomImage(message);
+                    break;
+                default:
+                    break;
             }
+        }
     }
 });
