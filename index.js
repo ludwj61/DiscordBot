@@ -7,6 +7,7 @@ const file_system = require('fs');
 const image_dir = './images/';
 
 const ytdl = require("ytdl-core");
+const validUrl = require("valid-url");
 
 const TOKEN = JSON.parse(file_system.readFileSync("config.json", "utf8"));
 
@@ -90,9 +91,9 @@ client.on("message", message => {
                 break;
             case "info":
                 const embed = new Discord.RichEmbed()
-                .addField("What is this horrible creation?", 
-                "The DegenerateBot will keep your server at peak degeneracy at all times.")
-                .addField("Some commands", "!furry\n!weeb\n!degen\n!hewwo");
+                    .addField("What is this horrible creation?",
+                        "The DegenerateBot will keep your server at peak degeneracy at all times.")
+                    .addField("Some commands", "!furry\n!weeb\n!degen\n!hewwo");
                 message.channel.send(embed);
                 break;
             default:
@@ -128,48 +129,47 @@ client.on("message", message => {
     } else if (message.member.user.tag != "DegenerateBot#4865" &&
         message.content.toLowerCase() === "stop") {
         message.reply("hee-hee~~ we will nevwa stawp being weebuwus!!!~");
-    } else {
-        var chance_for_random_message = Math.random();
+    } else if (!message.content.includes("https://") && !message.content.includes("http://")) {
+            var chance_for_random_message = Math.random();
+            if (message.member.user.tag != "DegenerateBot#4865"
+                && message.member.user.tag != "Vexera#8487"
+                && chance_for_random_message >= 0
+                && chance_for_random_message <= .20) {
 
-        if (message.member.user.tag != "DegenerateBot#4865"
-            && message.member.user.tag != "Vexera#8487"
-            && chance_for_random_message >= 0
-            && chance_for_random_message <= .25) {
+                var smileys = [";;w;;", "^w^", ">w<", "UwU", "(・`ω\´・)", "(´・ω・\`)"];
+                var random_smiley = smileys[Math.floor(Math.random() * smileys.length)];
 
-            var smileys = [";;w;;", "^w^", ">w<", "UwU", "(・`ω\´・)", "(´・ω・\`)"];
-            var random_smiley = smileys[Math.floor(Math.random() * smileys.length)];
+                var regex = /[lr]/g;
+                var owo_msg = message.content.replace(regex, "w");
 
-            var regex = /[lr]/g;
-            var owo_msg = message.content.replace(regex, "w");
+                owo_msg += " " + random_smiley;
+                message.reply(owo_msg);
+            } else if (message.member.user.tag != "DegenerateBot#4865"
+                && message.member.user.tag != "Vexera#8487"
+                && chance_for_random_message > .25
+                && chance_for_random_message <= .30) {
 
-            owo_msg += " " + random_smiley;
-            message.reply(owo_msg);
-        } else if (message.member.user.tag != "DegenerateBot#4865"
-            && message.member.user.tag != "Vexera#8487"
-            && chance_for_random_message > .25
-            && chance_for_random_message <= .33) {
-
-            message.reply("WOW~ YOU GOT A RARE DROP UWU!");
-            var randomPastaType = Math.floor(Math.random() * (NUMBER_OF_PASTAS + 1));
-            switch (randomPastaType) {
-                case 0:
-                    var pasta = getPasta("furry");
-                    message.channel.send(pasta);
-                    break;
-                case 1:
-                    var pasta = getPasta("weeb");
-                    message.channel.send(pasta);
-                    break;
-                case 2:
-                    file_system.readdir(image_dir, (err, files) => {
-                        var numberOfImages = files.length;
-                        var randomImage = Math.floor(Math.random() * numberOfImages) + 1;
-                        message.channel.send({ files: [image_dir + randomImage + ".jpg"] });
-                    });
-                    break;
-                default:
-                    break;
+                message.reply("WOW~ YOU GOT A RARE DROP UWU!");
+                var randomPastaType = Math.floor(Math.random() * (NUMBER_OF_PASTAS + 1));
+                switch (randomPastaType) {
+                    case 0:
+                        var pasta = getPasta("furry");
+                        message.channel.send(pasta);
+                        break;
+                    case 1:
+                        var pasta = getPasta("weeb");
+                        message.channel.send(pasta);
+                        break;
+                    case 2:
+                        file_system.readdir(image_dir, (err, files) => {
+                            var numberOfImages = files.length;
+                            var randomImage = Math.floor(Math.random() * numberOfImages) + 1;
+                            message.channel.send({ files: [image_dir + randomImage + ".jpg"] });
+                        });
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
     }
 });
