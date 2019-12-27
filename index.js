@@ -1,7 +1,5 @@
-const Discord = require('discord.js')
+const Discord = require("discord.js")
 const client = new Discord.Client();
-
-const TOKEN = "NjU5NjE3MzA3MTAxNzU3NDQw.XgQ7Dw.4HFb2XiQpr42w20VXtYh2VwR-tQ";
 
 const PREFIX = "!";
 
@@ -10,13 +8,15 @@ const image_dir = './images/';
 
 const ytdl = require("ytdl-core");
 
+const TOKEN = JSON.parse(file_system.readFileSync("config.json", "utf8"));
+
 // must manually be set to number of pasta types available that you want in general pool 
 // (not hewwo only pool)
 const NUMBER_OF_PASTAS = 2;
 
 const MIN_INTERVAL = 100000 * 60;
 
-client.login(TOKEN);
+client.login(TOKEN.token);
 
 client.on("ready", () => {
     console.log("DegenerateBot online");
