@@ -7,7 +7,6 @@ const file_system = require('fs');
 const image_dir = './images/';
 
 const ytdl = require("ytdl-core");
-const validUrl = require("valid-url");
 
 const TOKEN = JSON.parse(file_system.readFileSync("config.json", "utf8"));
 
