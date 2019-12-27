@@ -68,7 +68,7 @@ function uwuify(message) {
     owo_msg += " " + random_smiley;
 
     message.channel.send("hehe~\n");
-    
+
     if (owo_msg.includes("!uwuify")) {
         owo_msg = owo_msg.split("!uwuify").join();
         message.channel.send(owo_msg.substring(1));
@@ -150,8 +150,17 @@ client.on("message", message => {
         message.content.toLowerCase().includes("loli")) {
         message.reply("Ahh a fewwow cutie I see UwU~~");
     } else if (message.member.user.tag != "DegenerateBot#4865" &&
-        message.content.toLowerCase() === "stop") {
+        message.content.toLowerCase().includes("stop")) {
         message.reply("hee-hee~~ we will nevwa stawp being weebuwus!!!~");
+    } else if (message.member.user.tag != "DegenerateBot#4865" &&
+        message.content.toLowerCase().includes("rawr")) {
+        message.reply("roooaawwwr~~ hehe~");
+    } else if (message.member.user.tag != "DegenerateBot#4865" &&
+        message.content.toLowerCase().includes("uwu")) {
+        message.reply("OwO");
+    } else if (message.member.user.tag != "DegenerateBot#4865" &&
+        message.content.toLowerCase().includes("owo")) {
+        message.reply("UwU");
     } else if (!message.content.includes("https://") && !message.content.includes("http://")) {
         var chance_for_random_message = Math.random();
         if (message.member.user.tag != "DegenerateBot#4865"
