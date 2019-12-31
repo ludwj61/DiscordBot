@@ -10,6 +10,10 @@ const ytdl = require("ytdl-core");
 
 const TOKEN = JSON.parse(file_system.readFileSync("config.json", "utf8"));
 
+const FUR_PASTA_FILE = "furrypastas.json";
+const WEEB_PASTA_FILE = "weebpastas.json";
+const HEWWO_PASTA_FILE = "hewwopastas.json";
+
 // must manually be set to number of pasta types available that you want in general pool
 // (not !hewwo command pool)
 const NUMBER_OF_PASTAS = 2;
@@ -23,24 +27,24 @@ client.on("ready", () => {
 });
 
 function getPasta(type) {
-  var jsonString = file_system.readFileSync("copypastas.json", "utf8");
-  var obj = JSON.parse(jsonString);
+  var jsonString;
+  var obj;
   switch (type) {
     case "furry":
-      var random_array_value = Math.floor(
-        Math.random() * obj.furry_pastas.length
-      );
-      return obj.furry_pastas[random_array_value].pasta;
+      jsonString = file_system.readFileSync(FUR_PASTA_FILE, "utf8");
+      obj = JSON.parse(jsonString);
+      var random_array_value = Math.floor(Math.random() * obj.pastas.length);
+      return obj.pastas[random_array_value].pasta;
     case "weeb":
-      var random_array_value = Math.floor(
-        Math.random() * obj.weeb_pastas.length
-      );
-      return obj.weeb_pastas[random_array_value].pasta;
+      jsonString = file_system.readFileSync(WEEB_PASTA_FILE, "utf8");
+      obj = JSON.parse(jsonString);
+      var random_array_value = Math.floor(Math.random() * obj.pastas.length);
+      return obj.pastas[random_array_value].pasta;
     case "hewwo":
-      var random_array_value = Math.floor(
-        Math.random() * obj.hewwo_pastas.length
-      );
-      return obj.hewwo_pastas[random_array_value].pasta;
+      jsonString = file_system.readFileSync(HEWWO_PASTA_FILE, "utf8");
+      obj = JSON.parse(jsonString);
+      var random_array_value = Math.floor(Math.random() * obj.pastas.length);
+      return obj.pastas[random_array_value].pasta;
     default:
       break;
   }
@@ -66,6 +70,77 @@ function showRandomImage(message) {
     var randomImage = Math.floor(Math.random() * numberOfImages) + 1;
     message.channel.send({ files: [image_dir + randomImage + ".jpg"] });
   });
+}
+
+function getFileSizeInMegaBytes(filename) {
+  var stats = file_system.statSync(filename);
+  var fileSizeInBytes = stats["size"];
+  return fileSizeInBytes / 1000000.0;
+}
+
+function removeCommandFromString(commandString) {
+  if (commandString.includes("!addfurry")) {
+    commandString = commandString.split("!addfurry").join();
+  } else if (commandString.includes("!addweeb")) {
+    commandString = commandString.split("!addweeb").join();
+  } else if (commandString.includes("!addhewwo")) {
+    commandString = commandString.split("!addhewwo").join();
+  }
+  return commandString.substring(2);
+}
+
+function containsObject(obj, list) {
+  var i;
+  for (i = 0; i < list.length; i++) {
+    if (list[i] === obj) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function addPasta(pastaType, message) {
+  var type = "";
+  var data = removeCommandFromString(message.content).trim();
+  if (data.length <= 200) {
+    message.reply("pwese type a weal pasta >.<");
+  } else {
+    switch (pastaType) {
+      case FUR_PASTA_FILE:
+        type = "furry";
+        break;
+      case WEEB_PASTA_FILE:
+        type = "weeb";
+        break;
+      case HEWWO_PASTA_FILE:
+        type = "hewwo";
+        break;
+      default:
+        break;
+    }
+    if (getFileSizeInMegaBytes(pastaType) >= 100) {
+      message.reply("I have way too many " + type + " pastas!");
+    } else {
+      jsonString = file_system.readFileSync(pastaType, "utf8");
+      if (jsonString.trim().includes(JSON.stringify(data))) {
+        message.reply("I've got that one already ;;.;;");
+      } else {
+        obj = JSON.parse(jsonString);
+        obj.pastas.push({ pasta: data });
+        jsonContent = JSON.stringify(obj);
+
+        file_system.writeFile(pastaType, jsonContent, "utf8", function(err) {
+          if (err) {
+            console.log("An error occured while writing JSON Object to File.");
+            return console.log(err);
+          }
+          console.log("JSON file has been saved.");
+          message.reply("Yay i added dat wun ^^");
+        });
+      }
+    }
+  }
 }
 
 function uwuify(message) {
@@ -128,6 +203,15 @@ client.on("message", message => {
         break;
       case "uwuify":
         uwuify(message);
+        break;
+      case "addfurry":
+        addPasta(FUR_PASTA_FILE, message);
+        break;
+      case "addweeb":
+        addPasta(WEEB_PASTA_FILE, message);
+        break;
+      case "addhewwo":
+        addPasta(HEWWO_PASTA_FILE, message);
         break;
       default:
         message.reply(
