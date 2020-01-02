@@ -29,12 +29,17 @@ const activities_list = [
 
 client.login(TOKEN.token);
 
+function setActivity() {
+  const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
+  client.user.setActivity(activities_list[index]);
+}
+
 client.on("ready", () => {
   console.log("DegenerateBot online");
+  setActivity();
   setInterval(() => {
-    const index = Math.floor(Math.random() * (activities_list.length - 1) + 1); // generates a random number between 1 and the length of the activities array list (in this case 5).
-    client.user.setActivity(activities_list[index]); // sets bot's activities to one of the phrases in the arraylist.
-  }, 1000000); // Runs this every 10 seconds.
+    setActivity();
+  }, 1000000);
 });
 
 function getPasta(type) {
