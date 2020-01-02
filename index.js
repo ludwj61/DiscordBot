@@ -20,10 +20,21 @@ const NUMBER_OF_PASTAS = 2;
 
 const MIN_INTERVAL = 100000 * 60;
 
+const activities_list = [
+  "playing with lolis.",
+  "embracing my fursona.",
+  "!info for help.",
+  "looking cute."
+]; // creates an arraylist containing phrases you want your bot to switch through.
+
 client.login(TOKEN.token);
 
 client.on("ready", () => {
   console.log("DegenerateBot online");
+  setInterval(() => {
+    const index = Math.floor(Math.random() * (activities_list.length - 1) + 1); // generates a random number between 1 and the length of the activities array list (in this case 5).
+    client.user.setActivity(activities_list[index]); // sets bot's activities to one of the phrases in the arraylist.
+  }, 10000); // Runs this every 10 seconds.
 });
 
 function getPasta(type) {
@@ -198,7 +209,10 @@ client.on("message", message => {
             "What is this horrible creation?",
             "The DegenerateBot will keep your server at peak degeneracy at all times."
           )
-          .addField("Some commands", "!furry\n!weeb\n!degen\n!hewwo\n!uwuify");
+          .addField(
+            "Some commands",
+            "!furry\n!weeb\n!degen\n!hewwo\n!uwuify\n!addfurry\n!addweeb\n!addhewwo"
+          );
         message.channel.send(embed);
         break;
       case "uwuify":
