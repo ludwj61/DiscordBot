@@ -140,7 +140,7 @@ function addPasta(pastaType, message) {
     } else {
       jsonString = file_system.readFileSync(pastaType, "utf8");
       if (jsonString.trim().includes(JSON.stringify(data))) {
-        message.reply("I've got that one already ;;.;;");
+        message.reply("I've got that one alweady ;;.;;");
       } else {
         obj = JSON.parse(jsonString);
         obj.pastas.push({ pasta: data });
