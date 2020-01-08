@@ -30,7 +30,7 @@ const activities_list = [
 client.login(TOKEN.token);
 
 function setActivity() {
-  const index = Math.floor(Math.random() * (activities_list.length + 1));
+  const index = Math.floor(Math.random() * (activities_list.length));
   client.user.setActivity(activities_list[index]);
 }
 
