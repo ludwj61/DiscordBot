@@ -25,7 +25,7 @@ const activities_list = [
   "embracing my fursona.",
   "!info for help.",
   "looking cute."
-]; // creates an arraylist containing phrases you want your bot to switch through.
+]; 
 
 client.login(TOKEN.token);
 
