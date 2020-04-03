@@ -294,14 +294,14 @@ client.on("message", message => {
     var chance_for_random_message = Math.random();
     if (
       message.member.user.tag != "DegenerateBot#4865" &&
-      message.member.user.tag != "Vexera#8487" &&
+      message.member.user.tag != "Vexera#8487" && message.member.user.tag != "SmiteBot#0408" &&
       chance_for_random_message >= 0 &&
       chance_for_random_message <= 0.2
     ) {
       uwuify(message);
     } else if (
       message.member.user.tag != "DegenerateBot#4865" &&
-      message.member.user.tag != "Vexera#8487" &&
+      message.member.user.tag != "Vexera#8487" && message.member.user.tag != "SmiteBot#0408" &&
       chance_for_random_message > 0.25 &&
       chance_for_random_message <= 0.3
     ) {
